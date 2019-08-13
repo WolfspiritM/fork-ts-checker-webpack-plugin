@@ -208,20 +208,6 @@ export class CompilerHost
     // do nothing
   }
 
-  public resolveModuleNames(
-    moduleNames: string[],
-    containingFile: string,
-    reusedNames?: string[],
-    redirectedReference?: ts.ResolvedProjectReference
-  ): (ts.ResolvedModule | undefined)[] {
-    return this.tsHost.resolveModuleNames!(
-      moduleNames,
-      containingFile,
-      reusedNames,
-      redirectedReference
-    );
-  }
-
   public watchDirectory(
     path: string,
     callback: ts.DirectoryWatcherCallback,

@@ -233,7 +233,7 @@ class ForkTsCheckerWebpackPlugin {
 
     this.useTypescriptIncrementalApi =
       options.useTypescriptIncrementalApi === undefined
-        ? semver.gte(this.typescriptVersion, '3.0.0') && !this.vue
+        ? semver.gte(this.typescriptVersion, '3.0.0')
         : options.useTypescriptIncrementalApi;
 
     this.measureTime = options.measureCompilationTime === true;
@@ -246,15 +246,11 @@ class ForkTsCheckerWebpackPlugin {
   private validateVersions() {
     if (semver.lt(this.typescriptVersion, '2.1.0')) {
       throw new Error(
-        `Cannot use current typescript version of ${
-          this.typescriptVersion
-        }, the minimum required version is 2.1.0`
+        `Cannot use current typescript version of ${this.typescriptVersion}, the minimum required version is 2.1.0`
       );
     } else if (this.tslintVersion && semver.lt(this.tslintVersion, '4.0.0')) {
       throw new Error(
-        `Cannot use current tslint version of ${
-          this.tslintVersion
-        }, the minimum required version is 4.0.0`
+        `Cannot use current tslint version of ${this.tslintVersion}, the minimum required version is 4.0.0`
       );
     }
   }
@@ -542,7 +538,7 @@ class ForkTsCheckerWebpackPlugin {
             this.doneCallback();
           } else {
             if (this.compiler) {
-              forkTsCheckerHooks.waiting.call(this.tslint !== false);
+              forkTsCheckerHooks.waiting.call(!!this.tslint);
             }
             if (!this.silent && this.logger) {
               this.logger.info(
@@ -567,10 +563,7 @@ class ForkTsCheckerWebpackPlugin {
           this.doneCallback();
         } else {
           if (this.compiler) {
-            this.compiler.applyPlugins(
-              legacyHookMap.waiting,
-              this.tslint !== false
-            );
+            this.compiler.applyPlugins(legacyHookMap.waiting, !!this.tslint);
           }
           if (!this.silent && this.logger) {
             this.logger.info(

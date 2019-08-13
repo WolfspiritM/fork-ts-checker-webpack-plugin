@@ -103,6 +103,19 @@ async function run(cancellationToken: CancellationToken) {
     diagnostics = await checker.getDiagnostics(cancellationToken);
     if (checker.hasLinter()) {
       lints = checker.getLints(cancellationToken);
+      lints = lints.map(lint => {
+        if (lint.file) {
+          const unwrappedFileName = unwrapFileName(lint.file);
+
+          if (unwrappedFileName !== lint.file) {
+            return new NormalizedMessage({
+              ...lint.toJSON(),
+              file: unwrappedFileName
+            });
+          }
+        }
+        return lint;
+      });
     }
 
     diagnostics = diagnostics.map(diagnostic => {
