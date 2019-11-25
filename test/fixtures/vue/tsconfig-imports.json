@@ -8,6 +8,6 @@
     },
     "lib": ["es2016", "dom"]
   },
-  "include": ["src/imports/Test.vue"],
+  "include": ["src/imports/Test.vue","src/imports/Test.vue.__fake__.ts"],
   "exclude": ["node_modules"]
 }
